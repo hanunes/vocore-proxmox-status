@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+token
+*dump*.txt
+*.tar
+touch_capture.txt
+touch_frames.txt
+touch_revive.txt
+touch_thaw.txt
+
+# Local notes
+TODO.md

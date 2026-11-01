@@ -1,0 +1,17 @@
+[Unit]
+Description=Proxmox status panel on a VoCore USB screen
+After=network-online.target pveproxy.service
+Wants=network-online.target
+
+[Service]
+User=vocore-status
+ExecStart=/usr/bin/python3 /opt/vocore-status/vocore_status.py
+Restart=always
+RestartSec=30
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

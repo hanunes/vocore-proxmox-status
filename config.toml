@@ -1,0 +1,19 @@
+# Installed to /etc/vocore-status/config.toml; install.sh never overwrites it.
+# Restart after editing: systemctl restart vocore-status
+token_id = "vocore@pve!screen"
+interval = 15                 # seconds between data refreshes
+view = "hosts"                # "summary", "hosts" (2 per page) or "guests" (a page per guest)
+page_seconds = 8              # seconds on each page when there is more than one
+brightness = 60
+flip = false                  # true if mounted upside down
+touch = false                 # true: tap left for back, middle to pause, right for next
+touch_invert = false          # true if left and right tap zones come out swapped
+pressure_warn = 10            # amber when CPU, memory or IO is stalled this % of the time
+pressure_bad = 30             # red from this %
+backup_warn_hours = 26        # amber if any node's latest backup is older than this
+replication_warn_minutes = 60 # amber if no job at all has synced for this long
+replication_max_hours = 26    # amber if any single job has not synced for this long
+temp_port = 0                 # e.g. 8765 on every node to show all temperatures; 0 = own node only
+swap_warn = 50                # amber when this % of swap is used
+hide = []                     # any of "net", "temp", "pressure", "load", "swap", "disk_io", "tags", "storage_pages"
+nodes = []                    # e.g. ["pve1", "pve2"]; empty = sorted names from the API
