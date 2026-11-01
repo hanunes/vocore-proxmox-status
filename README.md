@@ -84,7 +84,23 @@ same USB ID but have different resolutions, and some have different driver board
 
 Run everything as root on the host, except where noted.
 
-### 1. Test the screen
+### 1. Get the code
+
+On the node with the screen, in a shell over SSH or from the Proxmox web interface:
+
+```bash
+apt install git
+git clone https://github.com/hanunes/vocore-proxmox-status.git /root/vocore-status
+cd /root/vocore-status
+```
+
+For another node, run the same commands there, or copy the folder from this one:
+
+```bash
+scp -r /root/vocore-status root@pve2:/root/
+```
+
+### 2. Test the screen
 
 This needs nothing except `python3-usb`, and it doesn't change anything on the screen permanently.
 
@@ -95,11 +111,11 @@ python3 panel_test.py
 
 You should see a mostly blue screen, a green strip along one long edge and a red block at one short end. Hold the screen
 so the red block is on the left and the green strip is at the bottom: that's how the panel is drawn. If it's upside down
-in your mount, set `flip = true` in step 4.
+in your mount, set `flip = true` in step 5.
 
-### 2. Install the service
+### 3. Install the service
 
-Copy this folder to every node, or clone the repository there, then run this on each:
+Run this on every node, from the `vocore-status` folder:
 
 ```bash
 sh install.sh
@@ -111,7 +127,7 @@ and starts the service. It's safe to run again.
 **You can install it on every node.** With no screen attached, the service only sleeps and checks again every 30 seconds.
 To move the screen, unplug it and plug it into another node.
 
-### 3. Create a read-only API token
+### 4. Create a read-only API token
 
 Do this once, on one node, because users and tokens are shared across a cluster.
 
@@ -132,7 +148,7 @@ ssh root@pve2 'install -m 640 -g vocore-status /dev/null /etc/vocore-status/toke
   < /etc/vocore-status/token
 ```
 
-### 4. Start it
+### 5. Start it
 
 Edit `/etc/vocore-status/config.toml` if needed, restart the service on each node and replug the screen so the USB
 permission applies:
@@ -143,8 +159,15 @@ systemctl restart vocore-status
 
 ### Updating
 
-Get the new files, then run `sh install.sh` on each node again. Your `config.toml` stays as it is, so new settings use
-their defaults until you add them.
+On each node:
+
+```bash
+cd /root/vocore-status
+git pull
+sh install.sh
+```
+
+Your `config.toml` stays as it is, so new settings use their defaults until you add them.
 
 ## Configuration
 
